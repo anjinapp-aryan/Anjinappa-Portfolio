@@ -1,3 +1,7 @@
+import "./globals.css";
+import { Inter } from "next/font/google";
+
+const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
   title: "Anjinappa N Portfolio",
@@ -7,7 +11,9 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body className={inter.className + " bg-gray-50 text-gray-900"}>
+        {children}
+      </body>
     </html>
   );
 }
