@@ -1,5 +1,23 @@
 # UI Reuse Map
 
+## Phase 9 — Real Portfolio Content
+
+Phase 9 was a content/verification phase. **No new UI component was created and no dependency was added.** Every section populated in this phase renders through components that already existed from Phases 4–7:
+
+| Need | Component used | Decision | Note |
+|---|---|---|---|
+| Project cards | `components/portfolio/ProjectCard.js` (Phase 5) | **REUSE** | Two small additions, no redesign: an optional `href` prop rendering a "Case study →" link, and a `hasCaseStudy` guard so the link only appears when the project actually has narrative fields |
+| Project grid + category filter | `components/portfolio/ProjectGrid.js` (Phase 5) | **REUSE** | Unchanged except for passing `href` through. The filter, dormant since Phase 5, now activates for the first time — the four published projects produce four categories (AI Engineering, Backend, Developer Tooling, Frontend) |
+| Case study pages | `components/portfolio/CaseStudy.js` + `app/projects/[slug]/page.js` (Phase 6) | **REUSE** | Unchanged. Its conditional-section design proved correct in practice: Code2Shorts renders 6 sections, Anatomy Atelier renders none (no invented filler) |
+| Labs cards | `ProjectCard` via `components/sections/Labs.js` (Phase 7) | **REUSE** | Unchanged. No `href` is passed, so no case-study link appears — labs have no detail route |
+| GitHub section | `components/sections/GitHubSection.js` (Phase 7) | **ADAPT** | Renders for the first time now that GitHub is verified. Expanded from a bare URL to a short profile + YouTube link block. Deliberately *not* a repository listing — see below |
+| Skills | inline in `app/page.js` | **ADAPT** | Rendering changed from flat chips to category groups, because `data/skills.js` changed shape (required by this phase's brief: organise skills into engineering categories) |
+| Experience | inline in `app/page.js` | **ADAPT** | Now renders an optional `highlights` bullet list per role, because the résumé supplies per-role detail the old single-line shape couldn't hold |
+
+**Architecture-diagram library: still not added.** Phases 6 and 7 deferred this search until real architecture content existed. It now does — three case studies describe their architecture. The search was reconsidered and the answer is still no: all three descriptions are *prose* (component responsibilities, failover ordering, pipeline stages), and none of the source READMEs contains a diagram, topology or data model that a diagram library would render faithfully. Generating a visual would mean inventing structure the sources don't specify — a fabrication risk, not a tooling gap. Revisit if a project publishes a real diagram.
+
+**GitHub section deliberately not a repo listing.** The brief allows showing selected repositories. The repositories worth showing are already published individually, with verified links, in Featured Work and Engineering Labs. Auto-listing all 21 public repos would surface three empty repositories and three forks — volume at the cost of credibility.
+
 ## Phase 7 — Architecture / Engineering Labs
 
 `data/labs.js` and `data/ai.js` are both empty; `data/social.js`'s `github.url` is `null` with `needsVerification: true`. All three remain true at the start of this phase — no experiment, AI-exploration, or GitHub content was added to the repository. Per this phase's brief and the same rule already applied in Phase 5: build the reusable architecture, render nothing, don't fabricate.

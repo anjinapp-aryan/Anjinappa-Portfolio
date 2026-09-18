@@ -1,8 +1,14 @@
 /**
  * Certifications.
- * Source: extracted verbatim from app/page.js "Awards & Certifications"
- * list (Phase 0 audit). Non-certification entries live in data/awards.js.
+ *
+ * Phase 9 correction: the site previously read "AWS DEV-C01 & CLF-C02
+ * Certified". "DEV-C01" is not a real AWS exam code — the résumé states
+ * "AWS Certified Developer Associate (DVA-C02)". Corrected, and the two
+ * certifications split into separate entries.
  */
-const certifications = ["AWS DEV-C01 & CLF-C02 Certified"];
+const certifications = [
+  "AWS Certified Developer – Associate (DVA-C02)",
+  "AWS Certified Cloud Practitioner (CLF-C02)",
+];
 
 export default certifications;

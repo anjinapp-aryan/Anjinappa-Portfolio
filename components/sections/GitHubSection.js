@@ -2,12 +2,17 @@ import social from "../../data/social";
 import Section from "../layout/Section";
 
 /**
- * data/social.js has github.url: null (needsVerification: true) — no
- * GitHub/open-source link exists anywhere in the repository's source
- * content (Phase 0 finding, still true). Renders nothing until a real
- * URL is added and the needsVerification flag is deliberately cleared;
- * a flagged-but-unset URL is not "safe to render" per the data principle
- * established in Phase 1/Phase 3 (data/social.js, docs/DATA-MODEL.md).
+ * Renders only when a GitHub URL exists AND is not flagged for
+ * verification. Phase 9 verified the identity two ways (the résumé lists
+ * github.com/anjinapp-aryan, and the GitHub API confirms that profile is
+ * "Anjinappa N" at JP Morgan), so this section now renders for the first
+ * time.
+ *
+ * Deliberately a single profile link rather than a repository listing:
+ * the repositories worth showing are already published individually, with
+ * verified links, in the Featured Work and Engineering Labs sections.
+ * Repeating them here — or auto-listing all 21 public repositories,
+ * several of which are empty or forks — would add volume, not credibility.
  */
 export default function GitHubSection() {
   if (!social.github.url || social.github.needsVerification) {
@@ -16,13 +21,32 @@ export default function GitHubSection() {
 
   return (
     <Section id="github">
-      <div className="rounded-card border border-border bg-background-surface p-8 shadow-soft text-center">
+      <div className="rounded-card border border-border bg-background-surface p-8 text-center shadow-soft">
         <h2 className="text-heading-2 font-semibold text-foreground mb-3">
-          GitHub &amp; Open Source
+          Open Source &amp; Code
         </h2>
-        <a href={social.github.url} target="_blank" rel="noreferrer" className="text-accent hover:underline">
-          {social.github.url}
-        </a>
+        <p className="mx-auto max-w-2xl text-foreground-muted">
+          The projects and labs above link straight to their repositories. Everything
+          else — experiments in progress, smaller explorations — lives on the profile.
+        </p>
+        <div className="mt-6 flex flex-wrap justify-center gap-3">
+          <a
+            href={social.github.url}
+            target="_blank"
+            rel="noreferrer"
+            className="rounded-control border border-border px-5 py-2.5 text-sm font-semibold text-foreground transition-colors duration-base hover:border-accent hover:text-accent"
+          >
+            GitHub Profile
+          </a>
+          <a
+            href={social.youtube.url}
+            target="_blank"
+            rel="noreferrer"
+            className="rounded-control border border-border px-5 py-2.5 text-sm font-semibold text-foreground transition-colors duration-base hover:border-accent hover:text-accent"
+          >
+            YouTube
+          </a>
+        </div>
       </div>
     </Section>
   );

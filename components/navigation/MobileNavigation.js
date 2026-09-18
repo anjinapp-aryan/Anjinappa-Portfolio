@@ -33,7 +33,7 @@ export default function MobileNavigation({ items, open, onClose, triggerRef }) {
       id="mobile-navigation"
       role="menu"
       aria-label="Mobile navigation"
-      className="space-y-2 border-b border-border bg-background px-6 py-4 md:hidden"
+      className="space-y-2 border-b border-border bg-background px-6 py-4 lg:hidden"
     >
       {items.map((item) => (
         <a

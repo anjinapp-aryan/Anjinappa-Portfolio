@@ -1,6 +1,19 @@
 # Data Model
 
-Phase 1 output. All content below was extracted verbatim from `app/page.js` (Phase 0 source of truth) into `data/*.js`. Nothing was invented, reworded, or embellished; wording/dates are preserved exactly as originally authored unless a note says otherwise.
+Phase 1 output, **updated in Phase 9**. Phase 1 extracted the then-hardcoded content verbatim from `app/page.js`. Phase 9 reconciled that content against the résumé and verified public repositories, so some shapes below have changed — those changes are marked. Nothing is invented at any point; see `docs/CONTENT-AUDIT.md` and `docs/PROJECT-AUDIT.md` for the evidence behind every published claim.
+
+## Phase 9 shape changes (summary)
+
+| File | Change |
+|---|---|
+| `profile.js` | Added `location` and `heroSummary`; `heroTitle` and `aboutSummary` rewritten from the résumé |
+| `experience.js` | Added optional `highlights: string[]` per role; titles/dates/companies corrected to résumé wording |
+| `skills.js` | **Shape changed** — was `string[]`, now `{ category, items: string[] }[]` |
+| `certifications.js` | Corrected a wrong exam code (`DEV-C01` → `DVA-C02`) and split into two entries |
+| `social.js` | Each link is now `{ label, url, needsVerification }`; LinkedIn and GitHub verified; `youtube` added |
+| `projects.js` | Populated with 4 verified projects (was empty) |
+| `labs.js` | Populated with 2 verified labs (was empty) |
+| `ai.js` | Still empty — deliberately, see the file header and `docs/PROJECT-AUDIT.md` |
 
 ## data/profile.js
 
