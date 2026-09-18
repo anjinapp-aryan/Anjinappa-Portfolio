@@ -1,5 +1,19 @@
 # UI Reuse Map
 
+## Phase 5 — Featured Portfolio
+
+`data/projects.js` is still empty — confirmed again at the start of this phase (no project content was added to the repository between Phase 4 and Phase 5). Per this phase's brief, the reusable architecture is built, but nothing fabricated and nothing rendered.
+
+**Reuse search**: the full 195-file Lightswind registry listing (already fetched in Phase 4) has no `masonry`, `filter`, or `portfolio`-named component. `card.tsx` (189 loc) was inspected in Phase 4's session and found to depend on a shadcn-style `--card`/`--card-foreground` CSS variable pair this project doesn't have — adapting it 1:1 would mean a second color-token system, which this phase's brief explicitly forbids. `badge.tsx` depends on `class-variance-authority` (a new dependency) for something as small as a rounded label chip. `glowing-cards.tsx` (212 loc) offers a mouse-tracked glow-follow hover effect with no framer-motion dependency — a reasonable candidate, but investing motion complexity into a section with zero real content to prove it against isn't proportionate right now; the existing `shadow-glow-accent` CSS token (already defined, already used on Hero's photo) covers card hover with zero extra code.
+
+**Decision**: BUILD `ProjectCard`/`ProjectGrid`/`FeaturedWork`, informed by Lightswind's `card.tsx` shape (bordered surface, optional hover lift) but wired to this project's own tokens, not its source. Filtering is a ~15-line `useState` + `Array.filter` — not a rebuilt masonry/animation engine, and it never activates today (single-project or zero-project data doesn't produce more than one category to filter by).
+
+**Empty-state decision**: `FeaturedWork` returns `null` outright — no heading, no "coming soon" placeholder, nothing — when `data/projects.js` has zero entries. `ProjectGrid` (and its `useState` filter logic) is loaded via `next/dynamic` so its client JS isn't shipped to the browser at all while unused.
+
+**Dependency added**: none.
+
+**Still missing**: real project data. `FeaturedWork`/`ProjectGrid`/`ProjectCard` are fully built and wired into `app/page.js` (between Experience and Awards) — adding entries to `data/projects.js` in the documented shape (`docs/DATA-MODEL.md`) is the only remaining step to make this section appear. No nav entry was added to `lib/navigation.js` for `#projects` since the section doesn't render (Phase 3's rule: don't link to a destination that doesn't exist) — add one when real data lands.
+
 ## Phase 4 — Hero
 
 Decisions below are based on inspecting actual component source (not just docs/marketing copy) from `codewithMUHILAN/Lightswind-UI-Library` (branch `Master`), via the GitHub API and raw file contents. Nothing is claimed as "reused" without having read the real `.tsx` source.

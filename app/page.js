@@ -9,6 +9,7 @@ import Footer from "../components/layout/Footer";
 import Container from "../components/layout/Container";
 import Section from "../components/layout/Section";
 import Hero from "../components/sections/Hero";
+import FeaturedWork from "../components/sections/FeaturedWork";
 
 export default function Home() {
   return (
@@ -63,6 +64,8 @@ export default function Home() {
             </ul>
           </div>
         </Section>
+
+        <FeaturedWork />
 
         {/* Awards */}
         <Section id="awards">
