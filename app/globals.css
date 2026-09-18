@@ -3,6 +3,25 @@
 @tailwind components;
 @tailwind utilities;
 
+/*
+ * Design tokens — see docs/DESIGN-SYSTEM.md.
+ * Dark-first: :root holds the dark palette directly (no light theme is in
+ * scope yet). Not referenced by any component today (app/page.js still uses
+ * literal Tailwind classes) — additive scaffolding for Phase 3+.
+ */
+:root {
+  --color-background: #0a0e14;
+  --color-surface: #10151c;
+  --color-surface-elevated: #161c26;
+  --color-foreground: #e6eaf0;
+  --color-foreground-muted: #9aa5b1;
+  --color-border: rgba(255, 255, 255, 0.08);
+  --color-accent: #5b8cff;
+  --color-accent-muted: rgba(91, 140, 255, 0.35);
+  --color-accent-secondary: #34d399;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+}
+
 body {
   font-family: sans-serif;
 }
