@@ -1,5 +1,19 @@
 # UI Reuse Map
 
+## Phase 7 — Architecture / Engineering Labs
+
+`data/labs.js` and `data/ai.js` are both empty; `data/social.js`'s `github.url` is `null` with `needsVerification: true`. All three remain true at the start of this phase — no experiment, AI-exploration, or GitHub content was added to the repository. Per this phase's brief and the same rule already applied in Phase 5: build the reusable architecture, render nothing, don't fabricate.
+
+**Reuse decision**: `Labs.js` and `AIExploration.js` both reuse `ProjectCard` (built in Phase 5) rather than new card components — a lab entry (`slug`/`title`/`description`/`technologies`/`github`/`demo`) is a strict subset of the project-card shape, and an AI entry's single `link` field maps onto `ProjectCard`'s `demo` prop. This avoids duplicating near-identical card JSX (brief Section 8.6: "check for duplicated JSX"). One known minor mismatch documented in `AIExploration.js`: `ProjectCard` always labels that link "Live Demo," which won't fit every possible AI entry (e.g. a paper/write-up) — left as a TODO for when real AI data exists and the link's actual nature is known, since the section doesn't render today regardless.
+
+**No architecture-visualization library added**: per Phase 6, nothing exists yet to visualize. Re-searching now would still turn up nothing to evaluate against.
+
+**GitHub/Open Source**: `GitHubSection.js` renders only if `social.github.url` is set AND `needsVerification` is `false` — a flagged-but-empty URL doesn't count as "safe to render," consistent with the rule already established for LinkedIn in Phase 1/3.
+
+**Dependency added**: none.
+
+**Sections built, currently unrendered**: `Labs` (`#labs`), `AIExploration` (`#ai`), `GitHubSection` (`#github`) — wired into `app/page.js` between `FeaturedWork` and `Awards`. No nav entries added for these (same reasoning as Phase 5 — Phase 3's rule against linking to a destination that doesn't render).
+
 ## Phase 6 — Project Case Studies
 
 `app/projects/[slug]/page.js` uses the existing Next.js 13.4.19 App Router dynamic-segment convention already in use elsewhere in this project — no upgrade, no new routing pattern. `generateStaticParams` maps directly over `data/projects.js` (currently `[]`, so zero pages are statically generated); any request to `/projects/<anything>` is handled dynamically and calls `notFound()` since no project exists — verified to return HTTP 404 against the production build.

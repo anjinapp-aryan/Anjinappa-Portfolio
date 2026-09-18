@@ -10,6 +10,9 @@ import Container from "../components/layout/Container";
 import Section from "../components/layout/Section";
 import Hero from "../components/sections/Hero";
 import FeaturedWork from "../components/sections/FeaturedWork";
+import Labs from "../components/sections/Labs";
+import AIExploration from "../components/sections/AIExploration";
+import GitHubSection from "../components/sections/GitHubSection";
 
 export default function Home() {
   return (
@@ -66,6 +69,9 @@ export default function Home() {
         </Section>
 
         <FeaturedWork />
+        <Labs />
+        <AIExploration />
+        <GitHubSection />
 
         {/* Awards */}
         <Section id="awards">
