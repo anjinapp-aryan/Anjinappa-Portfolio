@@ -1,5 +1,3 @@
-"use client";
-import { useState } from "react";
 import Image from "next/image";
 import profile from "../data/profile";
 import experience from "../data/experience";
@@ -8,59 +6,19 @@ import awards from "../data/awards";
 import certifications from "../data/certifications";
 import social from "../data/social";
 import resume from "../data/resume";
+import Navbar from "../components/layout/Navbar";
+import Footer from "../components/layout/Footer";
+import Container from "../components/layout/Container";
 
 export default function Home() {
-  const [menuOpen, setMenuOpen] = useState(false);
-
   return (
     <>
-      {/* Navbar */}
-      <nav className="fixed top-0 left-0 right-0 bg-white shadow z-50">
-        <div className="max-w-5xl mx-auto flex justify-between items-center px-6 py-3">
-          {/* Logo / Name + Profile Pic */}
-          <div className="flex items-center gap-3">
-            <Image
-              src={profile.photo}
-              alt={profile.name}
-              width={36}
-              height={36}
-              className="rounded-full border shadow-sm"
-            />
-            <h1 className="font-bold text-lg">{profile.name}</h1>
-          </div>
+      <Navbar />
 
-          {/* Desktop Menu */}
-          <div className="hidden md:flex space-x-6 text-gray-700 font-medium">
-            <a href="#about" className="hover:text-blue-600">About</a>
-            <a href="#skills" className="hover:text-blue-600">Skills</a>
-            <a href="#experience" className="hover:text-blue-600">Experience</a>
-            <a href="#awards" className="hover:text-blue-600">Awards</a>
-            <a href="#contact" className="hover:text-blue-600">Contact</a>
-          </div>
-
-          {/* Mobile Menu Button */}
-          <button
-            className="md:hidden text-gray-700 focus:outline-none"
-            onClick={() => setMenuOpen(!menuOpen)}
-          >
-            ☰
-          </button>
-        </div>
-
-        {/* Mobile Menu Dropdown */}
-        {menuOpen && (
-          <div className="md:hidden bg-white shadow px-6 py-4 space-y-2">
-            <a href="#about" className="block hover:text-blue-600" onClick={() => setMenuOpen(false)}>About</a>
-            <a href="#skills" className="block hover:text-blue-600" onClick={() => setMenuOpen(false)}>Skills</a>
-            <a href="#experience" className="block hover:text-blue-600" onClick={() => setMenuOpen(false)}>Experience</a>
-            <a href="#awards" className="block hover:text-blue-600" onClick={() => setMenuOpen(false)}>Awards</a>
-            <a href="#contact" className="block hover:text-blue-600" onClick={() => setMenuOpen(false)}>Contact</a>
-          </div>
-        )}
-      </nav>
-
-      {/* Main Content */}
-      <main className="min-h-screen bg-gray-50 text-gray-900 scroll-smooth max-w-5xl mx-auto px-6 py-28 space-y-12">
+      <Container
+        as="main"
+        className="min-h-screen bg-gray-50 text-gray-900 scroll-smooth py-28 space-y-12"
+      >
         {/* Hero Section */}
         <section className="flex flex-col items-center justify-center text-center" id="home">
           <Image
@@ -161,12 +119,9 @@ export default function Home() {
           </p>
           <p>Phone: {social.phone}</p>
         </section>
+      </Container>
 
-        <footer className="py-6 text-center text-gray-500 text-sm">
-          © {new Date().getFullYear()} {profile.name}. All rights reserved.
-        </footer>
-      </main>
+      <Footer />
     </>
   );
 }
-
