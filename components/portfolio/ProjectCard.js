@@ -23,7 +23,7 @@ export default function ProjectCard({ project }) {
         // eslint-disable-next-line @next/next/no-img-element
         <img
           src={image}
-          alt=""
+          alt={title}
           className="mb-4 aspect-video w-full rounded-chip object-cover"
         />
       ) : null}

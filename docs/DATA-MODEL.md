@@ -108,6 +108,14 @@ All three currently export an **empty array** (`[]`). No source content exists f
 }
 ```
 
+## data/site.js (added Phase 8)
+
+Site-level config, not personal content — separate from the pattern above on purpose.
+
+| Field | Type | Notes |
+|---|---|---|
+| `url` | string | `https://anjinappa-portfolio.vercel.app` — the live deployment URL given at the start of this project, used for `metadataBase`/Open Graph/`sitemap.xml`/`robots.txt`. Not invented. |
+
 ## What was deliberately NOT done in Phase 1
 
 - No TypeScript — kept as plain JS modules per explicit Phase 1 instruction (no technical blocker required it).
