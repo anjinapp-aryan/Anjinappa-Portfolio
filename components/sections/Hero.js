@@ -15,12 +15,12 @@ import HeroBackground from "../ui/HeroBackground";
  * one-time entrance" the design system allows for Hero, with zero JS.
  * HeroBackground is adapted from Lightswind (see that file's own comment).
  *
- * Content is exactly the data already in data/profile.js, data/social.js,
- * data/resume.js — nothing here is invented. The LinkedIn URL is rendered
- * as-is even though data/social.js flags it needsVerification: true,
- * because that link already worked (functionally) before this phase and
- * Section 8.7 requires not regressing existing functionality; the flag
- * just means don't treat that URL as confirmed-correct when asked to fix it.
+ * Content is exactly the data in data/profile.js, data/social.js and
+ * data/resume.js — nothing here is invented. Phase 9 updated the copy to
+ * the résumé-verified role and focus, and swapped the CTA set: "View Work"
+ * now points at the (now populated) #projects section, and GitHub replaces
+ * Facebook, since GitHub is now verified and Facebook is a personal rather
+ * than engineering link.
  */
 export default function Hero() {
   return (
@@ -43,9 +43,10 @@ export default function Hero() {
         <h1 className="mt-8 text-4xl font-bold text-foreground md:text-display">
           {profile.name}
         </h1>
-        <p className="mt-3 max-w-xl text-body-lg text-foreground-muted">
+        <p className="mt-3 text-body-lg font-medium text-foreground">
           {profile.heroTitle}
         </p>
+        <p className="mt-4 max-w-2xl text-foreground-muted">{profile.heroSummary}</p>
 
         <div
           className="mt-8 flex flex-wrap items-center justify-center gap-3 motion-safe:animate-fade-in-up"
@@ -59,10 +60,18 @@ export default function Hero() {
             Download Resume
           </a>
           <a
-            href="#experience"
+            href="#projects"
             className="rounded-control border border-border px-5 py-2.5 text-sm font-semibold text-foreground transition-colors duration-base hover:border-accent hover:text-accent"
           >
-            View Experience
+            View Work
+          </a>
+          <a
+            href={social.github.url}
+            target="_blank"
+            rel="noreferrer"
+            className="rounded-control border border-border px-5 py-2.5 text-sm font-semibold text-foreground transition-colors duration-base hover:border-accent hover:text-accent"
+          >
+            {social.github.label}
           </a>
           <a
             href={social.linkedin.url}
@@ -70,15 +79,7 @@ export default function Hero() {
             rel="noreferrer"
             className="rounded-control border border-border px-5 py-2.5 text-sm font-semibold text-foreground transition-colors duration-base hover:border-accent hover:text-accent"
           >
-            LinkedIn
-          </a>
-          <a
-            href={social.facebook.url}
-            target="_blank"
-            rel="noreferrer"
-            className="rounded-control border border-border px-5 py-2.5 text-sm font-semibold text-foreground transition-colors duration-base hover:border-accent hover:text-accent"
-          >
-            Facebook
+            {social.linkedin.label}
           </a>
         </div>
       </div>

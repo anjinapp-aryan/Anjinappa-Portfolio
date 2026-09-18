@@ -42,7 +42,7 @@ export default function Navbar() {
           <span className="font-bold text-lg text-foreground">{profile.name}</span>
         </a>
 
-        <div className="hidden md:flex items-center gap-6 font-medium text-foreground-muted">
+        <div className="hidden lg:flex items-center gap-6 font-medium text-foreground-muted">
           {navigationItems.map((item) => (
             <a key={item.href} href={item.href} className="transition-colors duration-fast hover:text-accent">
               {item.label}
@@ -53,7 +53,7 @@ export default function Navbar() {
         <button
           ref={toggleButtonRef}
           type="button"
-          className="text-foreground-muted focus:outline-none md:hidden"
+          className="text-foreground-muted focus:outline-none lg:hidden"
           onClick={() => setMenuOpen((isOpen) => !isOpen)}
           aria-label={menuOpen ? "Close navigation menu" : "Open navigation menu"}
           aria-expanded={menuOpen}

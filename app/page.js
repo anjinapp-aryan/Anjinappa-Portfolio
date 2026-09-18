@@ -33,16 +33,25 @@ export default function Home() {
         {/* Skills */}
         <Section id="skills">
           <div className="rounded-card border border-border bg-background-surface p-8 shadow-soft">
-            <h2 className="text-heading-2 font-semibold text-foreground mb-6 text-center">
-              Skills
+            <h2 className="text-heading-2 font-semibold text-foreground mb-8 text-center">
+              Technical Expertise
             </h2>
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-4 max-w-3xl mx-auto">
-              {skills.map((skill, i) => (
-                <div
-                  key={i}
-                  className="rounded-chip border border-border bg-background-elevated p-3 text-center font-medium text-foreground"
-                >
-                  {skill}
+            <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
+              {skills.map((group) => (
+                <div key={group.category}>
+                  <h3 className="text-eyebrow uppercase text-foreground-muted mb-3">
+                    {group.category}
+                  </h3>
+                  <ul className="flex flex-wrap gap-2">
+                    {group.items.map((item) => (
+                      <li
+                        key={item}
+                        className="rounded-chip border border-border bg-background-elevated px-2.5 py-1 text-sm text-foreground"
+                      >
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
                 </div>
               ))}
             </div>
@@ -53,15 +62,21 @@ export default function Home() {
         <Section id="experience">
           <div className="rounded-card border border-border bg-background-surface p-8 shadow-soft">
             <h2 className="text-heading-2 font-semibold text-foreground mb-6">Experience</h2>
-            <ul className="space-y-6">
+            <ul className="space-y-8">
               {experience.map((job, i) => (
                 <li key={i}>
-                  <h3 className="text-heading-3 font-bold text-foreground">
-                    {job.company} ({job.period})
-                  </h3>
-                  <p className="text-foreground-muted">
-                    {job.role} | {job.description}
+                  <h3 className="text-heading-3 font-bold text-foreground">{job.company}</h3>
+                  <p className="mt-1 text-sm text-foreground-muted">
+                    {job.role} · {job.period}
                   </p>
+                  <p className="mt-2 text-foreground-muted">{job.description}</p>
+                  {job.highlights && job.highlights.length > 0 ? (
+                    <ul className="mt-3 list-disc space-y-1 pl-5 text-sm text-foreground-muted">
+                      {job.highlights.map((highlight) => (
+                        <li key={highlight}>{highlight}</li>
+                      ))}
+                    </ul>
+                  ) : null}
                 </li>
               ))}
             </ul>
@@ -95,12 +110,38 @@ export default function Home() {
           <div className="rounded-card border border-border bg-background-surface p-8 shadow-soft text-center">
             <h2 className="text-heading-2 font-semibold text-foreground mb-4">Contact</h2>
             <p className="text-foreground-muted">
-              Email:{" "}
+              {profile.location} ·{" "}
               <a href={`mailto:${social.email}`} className="text-accent hover:underline">
                 {social.email}
               </a>
             </p>
-            <p className="text-foreground-muted">Phone: {social.phone}</p>
+            {/* Phone deliberately not rendered — see data/social.js */}
+            <div className="mt-5 flex flex-wrap justify-center gap-4 text-sm font-semibold">
+              <a
+                href={social.linkedin.url}
+                target="_blank"
+                rel="noreferrer"
+                className="text-accent hover:underline"
+              >
+                {social.linkedin.label}
+              </a>
+              <a
+                href={social.github.url}
+                target="_blank"
+                rel="noreferrer"
+                className="text-accent hover:underline"
+              >
+                {social.github.label}
+              </a>
+              <a
+                href={social.youtube.url}
+                target="_blank"
+                rel="noreferrer"
+                className="text-accent hover:underline"
+              >
+                {social.youtube.label}
+              </a>
+            </div>
           </div>
         </Section>
       </Container>

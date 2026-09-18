@@ -140,6 +140,14 @@ Breakpoints are Tailwind's unchanged defaults (Phase 2 decision, `docs/DESIGN-SY
 
 Phases 5–7 remain content-blocked exactly as predicted here in Phase 0 — the component architecture for all three is complete and requires no further code changes once the user supplies real project/labs/AI/GitHub content; only `data/*.js` needs editing.
 
+## 9. Phase 9 — Real Content
+
+The content-blocked sections predicted in Phase 0 are now unblocked. `data/projects.js` (4 projects) and `data/labs.js` (2 labs) hold verified content, so Featured Work, Engineering Labs, the four `/projects/[slug]` case-study pages and the GitHub section all render for the first time. **No component was built and no dependency was added** — the Phase 4–7 architecture rendered real data without modification, which was the point of building it data-driven. See `docs/CONTENT-AUDIT.md`, `docs/PROJECT-AUDIT.md` and `docs/UI-REUSE-MAP.md` (Phase 9 entry).
+
+Two sections remain deliberately unrendered: `#ai` (`data/ai.js` empty by design — the AI work is published as real projects instead) and any education section (the résumé's education line is truncated mid-sentence). The empty-state behaviour built in Phases 5–7 is doing exactly its job.
+
+`lib/navigation.js` gained `#projects` and `#labs` entries, now that those destinations actually render. With seven nav items, the desktop/mobile nav breakpoint moved from `md` (768px) to `lg` (1024px) so the link row doesn't crowd at tablet width.
+
 ## 8. Phase 4–8 Master Execution Summary
 
 **Sitewide dark-first reskin (Phase 4)**: applying Phase 2's tokens to only the Hero would have left a dark Hero next to five still-white legacy sections — visibly broken, not "premium." `Navbar`, `MobileNavigation`, `Footer`, and the five original content sections in `app/page.js` were reskinned in the same phase (color/radius utility classes only; no content, structure, or data changed). A real bug from Phase 2 was found and fixed in the process: the custom `borderRadius` tokens were named `sm`/`md`/`lg`/`xl`, which overrode (rather than extended) Tailwind's default scale and silently changed the already-in-use `rounded-xl` skill chips — renamed to `chip`/`control`/`card`/`feature`. See `docs/UI-REUSE-MAP.md` Phase 4 entry.

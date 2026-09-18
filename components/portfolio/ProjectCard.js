@@ -14,8 +14,25 @@
  * but is built now so Phase 6 (case studies) and any future data can
  * render immediately without new component work.
  */
-export default function ProjectCard({ project }) {
+// Narrative fields that make a /projects/[slug] page worth linking to. A
+// project with none of them (e.g. one that only has a title, stack and
+// links) would render a case-study page with nothing on it, so the card
+// doesn't offer the link. Labs and AI entries reuse this component and
+// have no slug-backed route at all, hence the `href` guard too.
+const CASE_STUDY_FIELDS = [
+  "overview",
+  "problem",
+  "approach",
+  "architecture",
+  "implementation",
+  "decisions",
+  "results",
+  "lessons",
+];
+
+export default function ProjectCard({ project, href }) {
   const { title, description, technologies = [], github, demo, image } = project;
+  const hasCaseStudy = CASE_STUDY_FIELDS.some((field) => Boolean(project[field]));
 
   return (
     <article className="group rounded-card border border-border bg-background-surface p-6 shadow-soft transition-all duration-base hover:-translate-y-0.5 hover:shadow-glow-accent">
@@ -46,8 +63,13 @@ export default function ProjectCard({ project }) {
         </ul>
       ) : null}
 
-      {(github || demo) && (
-        <div className="mt-5 flex gap-4 text-sm font-semibold">
+      {(github || demo || (href && hasCaseStudy)) && (
+        <div className="mt-5 flex flex-wrap gap-4 text-sm font-semibold">
+          {href && hasCaseStudy ? (
+            <a href={href} className="text-accent hover:underline">
+              Case study →
+            </a>
+          ) : null}
           {github ? (
             <a href={github} target="_blank" rel="noreferrer" className="text-accent hover:underline">
               GitHub
