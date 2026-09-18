@@ -33,14 +33,14 @@ export default function MobileNavigation({ items, open, onClose, triggerRef }) {
       id="mobile-navigation"
       role="menu"
       aria-label="Mobile navigation"
-      className="md:hidden bg-white shadow px-6 py-4 space-y-2"
+      className="space-y-2 border-b border-border bg-background px-6 py-4 md:hidden"
     >
       {items.map((item) => (
         <a
           key={item.href}
           href={item.href}
           role="menuitem"
-          className="block hover:text-blue-600"
+          className="block text-foreground-muted transition-colors duration-fast hover:text-accent"
           onClick={onClose}
         >
           {item.label}

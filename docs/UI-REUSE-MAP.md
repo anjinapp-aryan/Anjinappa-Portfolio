@@ -1,6 +1,29 @@
-# UI Reuse Map — Application Shell (Phase 3)
+# UI Reuse Map
+
+## Phase 4 — Hero
 
 Decisions below are based on inspecting actual component source (not just docs/marketing copy) from `codewithMUHILAN/Lightswind-UI-Library` (branch `Master`), via the GitHub API and raw file contents. Nothing is claimed as "reused" without having read the real `.tsx` source.
+
+The full `registry/` listing (195 `.tsx` files) was fetched to check for a dedicated Hero or Portfolio component — **neither exists** by that name or shape in the free tier. This matches the Phase 0 finding. Candidates evaluated instead were text-animation and background primitives that a hero could compose from:
+
+| Candidate | Source inspected | Import dependencies | Decision | Reason |
+|---|---|---|---|---|
+| `typing-text.tsx` (116 loc) | Full head read | `framer-motion`, internal `cn()` | **Rejected** | This master execution explicitly says not to introduce Framer Motion without a concrete requirement a CSS-only approach can't meet. A `motion-safe:animate-fade-in-up` Tailwind utility (new `tailwind.config.js` keyframe, zero JS) covers the one-time entrance the design system allows for Hero. |
+| `shiny-text.tsx` (199 loc) | Full head read | `framer-motion`, internal `cn()` | **Rejected** | Same reason. |
+| `scroll-reveal.tsx` (187 loc) | Full head read | `framer-motion`, internal `cn()` | **Rejected** | Same reason — also scoped for repeated scroll-triggered reveals, not a one-time hero entrance. |
+| `dot-grid-background.tsx` (241 loc) | Full source read | None (canvas + pointer events) | **Rejected** | Draggable canvas grid with a perpetual `requestAnimationFrame` inertia loop that keeps scheduling frames even at rest — the opposite of "subtle," not `prefers-reduced-motion` aware, and a poor fit for a static portfolio hero (drag-to-pan makes sense in a demo, not here). |
+| `aurora-background.tsx`, `cyber-hive-background.tsx`, `hell-background.tsx`, `neural-link-background.tsx`, `cosmic-singularity-background.tsx` | Names/category only (not fetched in full — rejected on fit before deeper inspection was worth the time) | Unknown | **Rejected on name/category** | These are exactly the "excessive neon"/"cyberpunk" aesthetic the brief says to avoid; a grid-line or dot backdrop matches "Engineering Intelligence" far better than an aurora/nebula/hell effect. |
+| `grid-dot-backgrounds.tsx` (191 loc, exports `GridBackground` + `DotBackground`) | Full source read | Internal `cn()` only, no animation lib | **ADAPTED** | See `components/ui/HeroBackground.js` header comment for the exact adaptation (removed its client-side `.dark`-class `MutationObserver` detection — this project is dark-first with no toggle, so the color can be read straight from `--color-border`/`--color-accent-muted` CSS variables, turning it into a zero-JS Server Component). |
+
+**Hero decision**: BUILD the layout/copy (`components/sections/Hero.js`) — no Lightswind hero block exists to reuse or adapt — but COMPOSE its background from the adapted Lightswind grid primitive, and use a plain Tailwind CSS keyframe (not a Lightswind or third-party text-animation component) for the entrance motion.
+
+**Dependency added**: none. `HeroBackground` and the entrance animation are both zero-runtime-dependency (CSS/Server Component only).
+
+**Sitewide token application**: Phase 4 also swapped the remaining light-theme utility classes (`bg-white`, `bg-gray-50`, `text-gray-900/600/700`, `bg-blue-600`/`bg-blue-500`/`bg-green-600`, plain `rounded-xl`/`rounded-2xl`) across `Navbar`, `MobileNavigation`, `Footer`, and the five existing content sections in `app/page.js` for the Phase 2 dark-first tokens. This goes beyond "just the Hero" because a dark Hero followed immediately by white legacy sections would look broken, not "premium" — the whole point of Phase 2's tokens was a coherent dark-first identity, and this was the first phase whose brief explicitly permitted a visual redesign (unlike Phase 3, which was shell-only by explicit instruction). No section's *content, structure, or data* changed — only color/radius utility classes.
+
+**Bug found and fixed during this pass**: Phase 2's `borderRadius` tokens were originally named `sm`/`md`/`lg`/`xl`, which overrides (not extends) Tailwind's own default radius scale under `theme.extend`. The skill chips already used `rounded-xl` (default 0.75rem), so Phase 2 silently changed that to 1.5rem — a real visual change that Phase 2's build check didn't catch because it only compared JS bundle size, not rendered CSS. Renamed to `chip`/`control`/`card`/`feature` in `tailwind.config.js` and `docs/DESIGN-SYSTEM.md` so custom tokens can no longer collide with Tailwind's default key names.
+
+## Phase 3 — Application Shell
 
 ## Candidates Inspected
 

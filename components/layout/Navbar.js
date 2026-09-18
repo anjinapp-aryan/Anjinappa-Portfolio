@@ -29,7 +29,7 @@ export default function Navbar() {
   const toggleButtonRef = useRef(null);
 
   return (
-    <nav className="fixed top-0 left-0 right-0 bg-white shadow z-50">
+    <nav className="fixed top-0 left-0 right-0 z-50 border-b border-border bg-background/90 backdrop-blur">
       <Container className="flex justify-between items-center py-3">
         <a href="#home" className="flex items-center gap-3">
           <Image
@@ -37,14 +37,14 @@ export default function Navbar() {
             alt={profile.name}
             width={36}
             height={36}
-            className="rounded-full border shadow-sm"
+            className="rounded-full border border-border"
           />
-          <span className="font-bold text-lg">{profile.name}</span>
+          <span className="font-bold text-lg text-foreground">{profile.name}</span>
         </a>
 
-        <div className="hidden md:flex items-center gap-6 text-gray-700 font-medium">
+        <div className="hidden md:flex items-center gap-6 font-medium text-foreground-muted">
           {navigationItems.map((item) => (
-            <a key={item.href} href={item.href} className="hover:text-blue-600">
+            <a key={item.href} href={item.href} className="transition-colors duration-fast hover:text-accent">
               {item.label}
             </a>
           ))}
@@ -53,7 +53,7 @@ export default function Navbar() {
         <button
           ref={toggleButtonRef}
           type="button"
-          className="md:hidden text-gray-700 focus:outline-none"
+          className="text-foreground-muted focus:outline-none md:hidden"
           onClick={() => setMenuOpen((isOpen) => !isOpen)}
           aria-label={menuOpen ? "Close navigation menu" : "Open navigation menu"}
           aria-expanded={menuOpen}

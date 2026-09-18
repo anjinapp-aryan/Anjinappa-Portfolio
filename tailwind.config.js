@@ -49,10 +49,19 @@ module.exports = {
         ],
       },
       borderRadius: {
-        sm: "0.375rem",
-        md: "0.75rem",
-        lg: "1rem",
-        xl: "1.5rem",
+        // Named radius-* (not sm/md/lg/xl) so these never silently override
+        // Tailwind's own default radius scale, which the app already used
+        // in a few places (e.g. rounded-xl on skill chips). Phase 2 got
+        // this wrong — sm/md/lg/xl were defined directly under
+        // theme.extend.borderRadius, which DOES merge over/replace the
+        // matching default keys. That slipped through Phase 2's "additive
+        // only, no visual change" verification because that check only
+        // compared JS bundle size, not rendered CSS values. Corrected here
+        // in Phase 4, before any component depends on the old names.
+        chip: "0.375rem",
+        control: "0.75rem",
+        card: "1rem",
+        feature: "1.5rem",
       },
       boxShadow: {
         soft: "0 1px 2px rgba(0, 0, 0, 0.24), 0 8px 24px rgba(0, 0, 0, 0.24)",
@@ -72,6 +81,19 @@ module.exports = {
       },
       transitionTimingFunction: {
         standard: "cubic-bezier(0.4, 0, 0.2, 1)",
+      },
+      keyframes: {
+        "fade-in-up": {
+          "0%": { opacity: "0", transform: "translateY(8px)" },
+          "100%": { opacity: "1", transform: "translateY(0)" },
+        },
+      },
+      animation: {
+        // Pure CSS entrance animation — no animation library needed.
+        // Paired with the motion-safe: variant (built into Tailwind, no
+        // plugin) at every call site so prefers-reduced-motion is honored
+        // without extra JS.
+        "fade-in-up": "fade-in-up 400ms cubic-bezier(0.4, 0, 0.2, 1) both",
       },
     },
   },

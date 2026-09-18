@@ -15,7 +15,7 @@ import profile from "../../data/profile";
  */
 export default function Footer() {
   return (
-    <footer className="py-6 text-center text-gray-500 text-sm">
+    <footer className="border-t border-border py-6 text-center text-sm text-foreground-muted">
       © {new Date().getFullYear()} {profile.name}. All rights reserved.
     </footer>
   );

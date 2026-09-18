@@ -63,10 +63,12 @@ Existing Tailwind default scale is kept for anything not listed — only additiv
 
 | Token | Value |
 |---|---|
-| `rounded-sm` | 0.375rem — chips, small buttons |
-| `rounded-md` | 0.75rem — buttons, form inputs |
-| `rounded-lg` | 1rem — cards (replaces current ad hoc `rounded-2xl`, which is 1rem in default Tailwind — this token makes that value explicit/nameable rather than a magic default) |
-| `rounded-xl` | 1.5rem — hero image, large feature cards |
+| `rounded-chip` | 0.375rem — chips, small buttons |
+| `rounded-control` | 0.75rem — buttons, form inputs |
+| `rounded-card` | 1rem — cards |
+| `rounded-feature` | 1.5rem — hero image, large feature cards |
+
+**Corrected in Phase 4**: these were originally named `sm`/`md`/`lg`/`xl` directly under `theme.extend.borderRadius`, which overrides Tailwind's own default radius scale rather than adding to it — the app already used `rounded-xl` (default 0.75rem) on the skill chips, so that override silently changed its rendered value to 1.5rem. Phase 2's build check only compared JS bundle size, which doesn't catch a CSS-value-only change, so it went unreported. Renamed to `chip`/`control`/`card`/`feature` here so custom tokens can never collide with default Tailwind scale keys again.
 
 ## 6. Shadow
 
