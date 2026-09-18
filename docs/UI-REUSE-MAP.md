@@ -1,5 +1,17 @@
 # UI Reuse Map
 
+## Phase 6 — Project Case Studies
+
+`app/projects/[slug]/page.js` uses the existing Next.js 13.4.19 App Router dynamic-segment convention already in use elsewhere in this project — no upgrade, no new routing pattern. `generateStaticParams` maps directly over `data/projects.js` (currently `[]`, so zero pages are statically generated); any request to `/projects/<anything>` is handled dynamically and calls `notFound()` since no project exists — verified to return HTTP 404 against the production build.
+
+**Reuse search — architecture diagrams**: this phase's brief asks to search for a diagram/visualization library before any case study needs one. No project has architecture content to visualize yet, so no library was evaluated — picking one now would mean choosing a tool against a hypothetical shape rather than a real requirement. `CaseStudy.js` accepts an optional `architecture` field as prose for now; the actual reuse search (React/SVG diagram libraries) is deferred to Phase 7 or whenever real architecture content exists, per this project's own standing rule against speculative capability (see `docs/ARCHITECTURE.md` Section 2/Section 14 origin in the Phase 0 brief).
+
+**Decision**: BUILD `CaseStudy.js` — a data-driven detail layout where each of 9 possible sections (Overview/Problem/Engineering Approach/Architecture/Implementation/Engineering Decisions/Experiments/Results/Lessons Learned) renders only if `project[field]` is truthy. No template/OSS case-study component was searched for beyond Lightswind (already established as having no portfolio-shaped blocks) — a conditional-section detail page is standard composition, not a capability worth sourcing externally.
+
+**Dependency added**: none.
+
+**Data model extended** (`data/projects.js` comment only — array is still `[]`): documented the 9 optional case-study fields alongside the existing card-shape fields, so real project data can be added once without a second migration later.
+
 ## Phase 5 — Featured Portfolio
 
 `data/projects.js` is still empty — confirmed again at the start of this phase (no project content was added to the repository between Phase 4 and Phase 5). Per this phase's brief, the reusable architecture is built, but nothing fabricated and nothing rendered.
