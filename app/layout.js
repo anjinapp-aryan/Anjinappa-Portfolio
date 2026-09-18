@@ -1,11 +1,12 @@
 import "./globals.css";
 import { Inter } from "next/font/google";
+import profile from "../data/profile";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
-  title: "Anjinappa N Portfolio",
-  description: "Personal portfolio website of Anjinappa N - Senior Software Engineer",
+  title: `${profile.name} Portfolio`,
+  description: `Personal portfolio website of ${profile.name} - Senior Software Engineer`,
 };
 
 export default function RootLayout({ children }) {

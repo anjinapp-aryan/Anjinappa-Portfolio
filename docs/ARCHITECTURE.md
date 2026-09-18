@@ -4,19 +4,34 @@ Status: proposal for approval, nothing in this document is implemented yet.
 
 ## 1. Data Flow
 
+**Implemented in Phase 1** (plain JS, no TypeScript — see below):
+
 ```
-data/*.ts (typed, hand-authored from real content)
+data/*.js (profile, experience, skills, awards, certifications, social, resume — hand-extracted from real content; projects/labs/ai currently empty, no source data)
    ↓
-lib/types.ts (shared interfaces)
-   ↓
-components/sections/*.tsx (pure presentation, receives data as props/import)
-   ↓
-app/page.tsx (composes sections in order)
-   ↓
-app/projects/[slug]/page.tsx (BLOCKED — needs real project data)
+app/page.js (imports data modules directly, no intermediate type layer yet)
+app/layout.js (imports data/profile.js for metadata)
 ```
 
-No personal information should live inside a component file after Phase 1 — this directly fixes the current repo's core weakness (content and markup are inseparable today).
+`app/page.js` no longer contains hardcoded personal content — every string that was previously a literal (name, title, experience entries, skills, awards, social links, resume path) is now imported from `data/*.js`. Visual output and markup are unchanged from pre-Phase-1; only the content source moved.
+
+Phase 1 kept plain JavaScript per explicit instruction — no technical blocker required a TypeScript migration for this step. The `lib/types.ts` shared-interfaces layer described below remains a **Phase 2+ proposal**, not yet implemented.
+
+**Target flow once componentized (Phase 3+, not yet implemented):**
+
+```
+data/*.js (or *.ts, if a later phase migrates)
+   ↓
+lib/types.ts (shared interfaces — proposed, not yet created)
+   ↓
+components/sections/*.jsx (pure presentation, receives data as props/import)
+   ↓
+app/page.js (composes sections in order)
+   ↓
+app/projects/[slug]/page.js (BLOCKED — needs real project data)
+```
+
+No personal information should live inside a component file — Phase 1 already fixes this for the single-file `app/page.js`; Phase 3+ will carry the same discipline forward as the page is split into components.
 
 ## 2. Stack Decisions
 
